@@ -28,13 +28,22 @@ class OrderItemInline(admin.TabularInline): # admin.StackedInline
     model = models.OrderItem
     extra = 0
 
-
+ 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     autocomplete_fields = ['customer']
     inlines = [OrderItemInline]
     list_display = ['id', 'customer', 'placed_at']
     
+
+class ProductImageInline(admin.TabularInline):
+    model = models.ProductImage
+    readonly_fields = ['thumbnail']
+ 
+    def thumbnail(self, instance):
+        if instance.image.name != '':
+            return format_html(f"<img src='{instance.image.url}' class='thumbnail'/>") 
+        return ''
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -45,6 +54,7 @@ class ProductAdmin(admin.ModelAdmin):
         'slug': ['title']
     }
     actions = ['clear_inventory']
+    inlines = [ProductImageInline]
     # inlines = [TagInline]
     list_display = ['title', 'unit_price', 'inventory_status', 'collection_title']
     list_editable = ['unit_price']
@@ -70,6 +80,12 @@ class ProductAdmin(admin.ModelAdmin):
             f"{updated_count} products were successfully updated.",
             messages.ERROR
         )
+    
+    # Load the style sheet on the Product Admin page
+    class Media:
+        css = {
+            'all': ['store/styles.css']
+        }
 
 
 

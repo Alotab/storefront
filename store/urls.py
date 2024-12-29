@@ -7,15 +7,16 @@ router = routers.DefaultRouter()
 
 # router = SimpleRouter()
 router.register('products', views.ProductViewSet, basename='products')
-router.register('collections', views.CollectionViewSet)
+router.register('collections', views.CollectionViewSet) 
 router.register('carts', views.CartViewSet)
 router.register('customers', views.CustomerViewSet)
 # router.urls
 
 products_router = routers.NestedDefaultRouter(router, 'products', lookup='product')
 products_router.register('reviews', views.ReviewViewSet, basename='product-reviews') # basenames are used to generates urls patterns
+products_router.register('images', views.ProductImageViewSet, basename='product-images') # basenames are also set because we overide the get_queryset
 
-carts_router = routers.NestedDefaultRouter(router, 'carts', lookup='cart')
+carts_router = routers.NestedDefaultRouter(router, 'carts', lookup='cart') 
 carts_router.register('items', views.CartItemViewSet, basename='cart-items') # two routes--> cart-items-list and cart-items-detail
 
 urlpatterns = router.urls + products_router.urls + carts_router.urls
