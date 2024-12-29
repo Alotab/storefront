@@ -1,18 +1,36 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.cache import cache
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.db.models import Q, F, Value, Func
 from django.db.models.functions import Concat
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
-
+from rest_framework.views import APIView
+import requests
 from store.models import Customer, Product, OrderItem, Order, Collection
 from .tasks import notify_customers
+
+# Caching class based views
+class CacheView(APIView):
+    @method_decorator(cache_page(5 * 60))
+    def get(self, request):
+        response = requests.get('https://httpbin.org/delay/2')
+        data = response.json()
+        return render(request, 'hello.html', {'name': data})
+
+
+# Caching function based views
+@cache_page(5 * 60)
+def cache_views(request):
+    response = requests.get('https://httpbin.org/delay/2')
+    data = response.json()
+    return render(request, 'hello.html', {'name': data})
 
 
 def say_hello(request):
     pass
     # notify_customers.delay('Hello, message')
-
-
     # query_set = Product.objects.filter(Q(inventory__lt=20) | Q(unit_price__lt=20))
     # query_set = Product.objects.filter(inventory=F('collection__id'))
     # query_set = Product.objects.order_by('unit_price','-title')
