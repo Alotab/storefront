@@ -45,6 +45,7 @@ class ProductImageInline(admin.TabularInline):
             return format_html(f"<img src='{instance.image.url}' class='thumbnail'/>") 
         return ''
 
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     # fields = ['']
