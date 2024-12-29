@@ -5,11 +5,14 @@ from django.db.models.functions import Concat
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
 
 from store.models import Customer, Product, OrderItem, Order, Collection
-
+from .tasks import notify_customers
 
 
 def say_hello(request):
     pass
+    # notify_customers.delay('Hello, message')
+
+
     # query_set = Product.objects.filter(Q(inventory__lt=20) | Q(unit_price__lt=20))
     # query_set = Product.objects.filter(inventory=F('collection__id'))
     # query_set = Product.objects.order_by('unit_price','-title')
