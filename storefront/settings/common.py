@@ -15,23 +15,11 @@ from pathlib import Path
 from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s4ldntoo2wob!ok%)0*hn!tu-s$4-7w*53h!)jgt6+k3hgu=kt'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -94,55 +82,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'storefront.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         # 'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'storefront',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Alaska020',
-#         'HOST': '127.0.0.1',
-#         # 'HOST': '172.31.16.1',
-#         'PORT': '5432',
-#     }
-# }
-
-
-# DATABASES = {
-#     'default': {
-#         # 'ENGINE': 'django.db.backends.postgresql',
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'storefront',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Alaska020',  # Make sure this matches the password you used
-#         'HOST': '127.0.0.1',  # Make sure this is localhost
-#         'PORT': '5432',  # Default PostgreSQL port
-#     }
-# }
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'storefront',
-        'USER': 'root',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -192,9 +131,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    # 'PAGE_SIZE': 10,
 }
 
 # from the djoser documentation and settings for overriding the user serializer
